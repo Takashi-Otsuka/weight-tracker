@@ -34,9 +34,8 @@ Vercelを採用する。
 環境は以下を想定する。
 
 ```text
-develop → staging
-main → production
 feature/* → preview deployment
+main → production
 ```
 
 ---
@@ -59,9 +58,9 @@ PRごとにPreview URLを確認できる。
 
 ---
 
-### 3. Staging運用
+### 3. Preview運用
 
-developブランチをstagingに紐付けることで、本番前確認がしやすい。
+Pull RequestごとにVercel Preview Deploymentを利用することで、本番前確認がしやすい。
 
 ---
 

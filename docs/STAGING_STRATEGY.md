@@ -30,7 +30,7 @@
 
 ## Staging
 
-本番相当の検証環境。
+Vercel Preview Deploymentをstaging相当の検証環境として扱う。
 
 用途
 
@@ -54,12 +54,12 @@
 
 # Deployment Policy
 
-## develop
+## Feature Branch
 
-developブランチへpushされたらstagingへデプロイする。
+feature / fix / docs / chore / refactorブランチからPull Requestを作成すると、Vercel Preview Deploymentを生成する。
 
 ```text
-develop → staging
+feature/* → Pull Request → Vercel Preview Deployment
 ```
 
 ---
@@ -93,11 +93,11 @@ MVPではVercelを想定する。
 
 ```text
 local: http://localhost:3000
-staging: https://weight-tracker-staging.example.com
+staging: Vercel Preview URL
 production: https://weight-tracker.example.com
 ```
 
-実URLは確定後に更新する。
+Preview URLはPull Requestごとに発行される。
 
 ---
 
@@ -111,7 +111,7 @@ production: https://weight-tracker.example.com
 
 ## Staging
 
-Vercel Environment Variablesで管理する。
+Vercel Preview Environment Variablesで管理する。
 
 ## Production
 
@@ -142,7 +142,7 @@ stagingとproductionで同じDBを使わない。
 
 # E2E Test
 
-ステージング環境でPlaywrightを実行する。
+Playwright導入後、Pull RequestのVercel Preview Deploymentに対してE2Eテストを実行する。
 
 対象
 
@@ -157,7 +157,7 @@ stagingとproductionで同じDBを使わない。
 
 # Manual Verification
 
-stagingで以下を確認する。
+Pull RequestのVercel Preview Deploymentで以下を確認する。
 
 * iPhone Safari
 * Chrome
@@ -175,10 +175,10 @@ stagingで以下を確認する。
 ```text
 feature/*
   ↓ PR
-develop
-  ↓ staging deploy
+Vercel Preview Deployment
+  ↓
 manual check
-  ↓ PR
+  ↓ merge
 main
   ↓ production deploy
 ```
@@ -211,7 +211,8 @@ staging確認完了条件
 
 将来的に追加する。
 
-* Sentry staging environment
+* 固定staging環境
+* Sentry preview / staging environment
 * Supabase staging project
 * Feature Flag
 * Lighthouse check

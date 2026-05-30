@@ -67,7 +67,10 @@ backend
 logic
 storage
 documentation
+ci
+test
 blocked
+other
 ```
 
 ---

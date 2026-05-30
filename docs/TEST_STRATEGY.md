@@ -201,17 +201,18 @@ npm run test:e2e
 ```json
 {
   "scripts": {
-    "lint": "next lint",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   }
 }
 ```
+
+Playwright導入時に、必要に応じて `test:e2e` を追加する。
 
 ---
 

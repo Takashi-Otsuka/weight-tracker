@@ -1,0 +1,96 @@
+name: Bug
+description: 不具合報告
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: 不具合の概要を書いてください。
+      placeholder: 例：同じ日付の体重記録が重複登録される
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: 再現手順を書いてください。
+      placeholder: |
+        1. 体重を登録する
+        2. 同じ日付で再度登録する
+        3. 記録一覧を確認する
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: 期待する動作を書いてください。
+      placeholder: 同じ日付の記録は上書きされる
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: 実際の動作を書いてください。
+      placeholder: 同じ日付の記録が2件表示される
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: 修正完了と判断できる条件を書いてください。
+      placeholder: |
+        - 同じ日付の記録が上書きされる
+        - npm run lint が成功する
+        - npm run build が成功する
+        - npm run test が成功する
+        - npm run test:coverage が成功する
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: 主な対象領域を選択してください。
+      options:
+        - frontend
+        - backend
+        - logic
+        - storage
+        - documentation
+        - ci
+        - test
+        - blocked
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: 環境情報を書いてください。
+      placeholder: |
+        Browser:
+        Device:
+        OS:
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: 補足事項があれば書いてください。
+    validations:
+      required: false

@@ -1,58 +1,85 @@
-## Summary
+# Related Issue
 
-変更内容を簡潔に記載してください。
-
----
-
-## Background
-
-なぜこの変更が必要だったかを記載してください。
+Closes #
 
 ---
 
-## Changes
+# Summary
 
-実施した変更内容
+このPRで実施した内容を記載する。
 
-* [ ]
-* [ ]
-* [ ]
+例
 
----
-
-## Screenshots
-
-UI変更がある場合は添付してください。
+* WeightRecord型を追加
+* GoalSetting型を追加
+* SimulationResult型を追加
 
 ---
 
-## Checklist
+# Changes
 
-* [ ] docs/SPEC.mdを確認した
-* [ ] docs/ARCHITECTURE.mdを確認した
-* [ ] docs/DEVELOPMENT_RULES.mdを確認した
-* [ ] npm run lint を実行した
-* [ ] npm run build を実行した
-* [ ] 不要なコードを削除した
-* [ ] anyを使用していない
+変更内容を箇条書きで記載する。
+
+* Added ...
+* Updated ...
+* Removed ...
 
 ---
 
-## Impact
+# Out of Scope
 
-影響範囲
+このPRで対応していない内容を記載する。
 
-* [ ] Home
-* [ ] Records
-* [ ] Chart
-* [ ] Simulation
-* [ ] Settings
-* [ ] Shared Components
-* [ ] Storage Layer
-* [ ] Documentation
+例
+
+* Storage実装
+* UI実装
+* グラフ表示
 
 ---
 
-## Notes
+# Screenshots
 
-レビュー時の補足事項を記載してください。
+UI変更がある場合は添付する。
+
+## Before
+
+<!-- screenshot -->
+
+## After
+
+<!-- screenshot -->
+
+---
+
+# Test
+
+実施したテストを記載する。
+
+* [ ] npm run lint
+* [ ] npm run build
+* [ ] npm run test
+* [ ] npm run test:coverage
+
+Playwright導入後は `npm run test:e2e` も記載する。
+
+---
+
+# DOD Checklist
+
+* [ ] DOD.mdを満たしている
+* [ ] 関連ドキュメントを更新した
+* [ ] 不要なconsole出力がない
+* [ ] テストを追加・更新した
+* [ ] スコープ外の変更を含んでいない
+
+---
+
+# Risks / Notes
+
+懸念事項やレビュー時に見てほしいポイントを記載する。
+
+例
+
+* localStorage周辺の実装を重点的に確認してほしい
+* GoalSettingのoptionalityを見直した

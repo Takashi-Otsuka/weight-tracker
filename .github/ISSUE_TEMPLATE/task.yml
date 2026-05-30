@@ -1,0 +1,65 @@
+name: Task
+description: 機能追加・改善・ドキュメント修正など
+title: "[Task] "
+labels:
+  - task
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose
+      description: このIssueの目的を書いてください。
+      placeholder: 例：ドメインモデルを定義する
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: 完了条件を書いてください。
+      placeholder: |
+        - WeightRecordを定義する
+        - npm run lint が成功する
+        - npm run build が成功する
+        - npm run test が成功する
+        - npm run test:coverage が成功する
+    validations:
+      required: true
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: このIssueでは対応しないことを書いてください。
+      placeholder: |
+        - UI実装
+        - Storage実装
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: 主な対象領域を選択してください。
+      options:
+        - frontend
+        - backend
+        - logic
+        - storage
+        - documentation
+        - ci
+        - test
+        - blocked
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: 補足事項があれば書いてください。
+    validations:
+      required: false

@@ -82,10 +82,11 @@ type WeightRecord = {
 
 ```ts
 type GoalSetting = {
-  currentWeightKg: number;
-  targetWeightKg: number;
-  targetDate: string;
-  startDate: string;
+  currentWeightKg?: number;
+  startWeightKg?: number;
+  targetWeightKg?: number;
+  startDate?: string;
+  targetDate?: string;
   heightCm?: number;
 };
 ```

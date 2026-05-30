@@ -1,5 +1,5 @@
 name: Bug
-description: 不具合報告
+description: 不具合修正
 title: "[Bug] "
 labels:
   - bug
@@ -44,18 +44,40 @@ body:
       required: true
 
   - type: textarea
+    id: root-cause
+    attributes:
+      label: Root Cause
+      description: 原因が分かっている場合、または調査後に追記する内容を書いてください。
+    validations:
+      required: false
+
+  - type: textarea
     id: acceptance-criteria
     attributes:
       label: Acceptance Criteria
       description: 修正完了と判断できる条件を書いてください。
       placeholder: |
-        - 同じ日付の記録が上書きされる
+        - 不具合が再現しない
+        - 回帰テストを追加する
         - npm run lint が成功する
         - npm run build が成功する
         - npm run test が成功する
         - npm run test:coverage が成功する
     validations:
       required: true
+
+  - type: textarea
+    id: related-documents
+    attributes:
+      label: Related Documents
+      description: 関連ドキュメントを書いてください。
+      placeholder: |
+        - docs/SPEC.md
+        - docs/ARCHITECTURE.md
+        - docs/CODEX_WORKFLOW.md
+        - docs/AUTOMATION_POLICY.md
+    validations:
+      required: false
 
   - type: dropdown
     id: area
@@ -86,6 +108,25 @@ body:
         OS:
     validations:
       required: false
+
+  - type: textarea
+    id: codex-instructions
+    attributes:
+      label: Codex Instructions
+      description: Codexへ依頼する作業ルールを書いてください。
+      value: |
+        - .codex/instructions.md を遵守すること
+        - docs/CODEX_WORKFLOW.md を遵守すること
+        - docs/AUTOMATION_POLICY.md を遵守すること
+        - Root Causeを特定すること
+        - 回帰テストを追加すること
+        - Commitまで実施すること
+        - Pushまで実施すること
+        - Draft Pull Requestを作成すること
+        - Ready for Reviewへ変更しないこと
+        - Mergeしないこと
+    validations:
+      required: true
 
   - type: textarea
     id: notes

@@ -1,5 +1,5 @@
 name: Task
-description: 機能追加・改善・ドキュメント修正など
+description: 機能追加・改善・ドキュメント修正
 title: "[Task] "
 labels:
   - task
@@ -20,6 +20,8 @@ body:
       description: 完了条件を書いてください。
       placeholder: |
         - WeightRecordを定義する
+        - GoalSettingを定義する
+        - SimulationResultを定義する
         - npm run lint が成功する
         - npm run build が成功する
         - npm run test が成功する
@@ -38,6 +40,19 @@ body:
     validations:
       required: false
 
+  - type: textarea
+    id: related-documents
+    attributes:
+      label: Related Documents
+      description: 関連ドキュメントを書いてください。
+      placeholder: |
+        - docs/SPEC.md
+        - docs/ARCHITECTURE.md
+        - docs/CODEX_WORKFLOW.md
+        - docs/AUTOMATION_POLICY.md
+    validations:
+      required: false
+
   - type: dropdown
     id: area
     attributes:
@@ -53,6 +68,26 @@ body:
         - test
         - blocked
         - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: codex-instructions
+    attributes:
+      label: Codex Instructions
+      description: Codexへ依頼する作業ルールを書いてください。
+      value: |
+        - .codex/instructions.md を遵守すること
+        - docs/CODEX_WORKFLOW.md を遵守すること
+        - docs/AUTOMATION_POLICY.md を遵守すること
+        - Scope外変更禁止
+        - 必要なテストを追加すること
+        - ドキュメント更新が必要な場合は更新すること
+        - Commitまで実施すること
+        - Pushまで実施すること
+        - Draft Pull Requestを作成すること
+        - Ready for Reviewへ変更しないこと
+        - Mergeしないこと
     validations:
       required: true
 

@@ -8,33 +8,21 @@ Closes #
 
 このPRで実施した内容を記載する。
 
-例
-
-* WeightRecord型を追加
-* GoalSetting型を追加
-* SimulationResult型を追加
+-
 
 ---
 
 # Changes
 
-変更内容を箇条書きで記載する。
-
-* Added ...
-* Updated ...
-* Removed ...
+- Added:
+- Updated:
+- Removed:
 
 ---
 
 # Out of Scope
 
-このPRで対応していない内容を記載する。
-
-例
-
-* Storage実装
-* UI実装
-* グラフ表示
+-
 
 ---
 
@@ -50,36 +38,38 @@ UI変更がある場合は添付する。
 
 <!-- screenshot -->
 
+UI変更がない場合:
+
+N/A
+
 ---
 
 # Test
 
-実施したテストを記載する。
+- [ ] npm run lint
+- [ ] npm run build
+- [ ] npm run test
+- [ ] npm run test:coverage
 
-* [ ] npm run lint
-* [ ] npm run build
-* [ ] npm run test
-* [ ] npm run test:coverage
+Playwright導入後:
 
-Playwright導入後は `npm run test:e2e` も記載する。
+`npm run test:e2e` も記載する。
 
 ---
 
 # DOD Checklist
 
-* [ ] DOD.mdを満たしている
-* [ ] 関連ドキュメントを更新した
-* [ ] 不要なconsole出力がない
-* [ ] テストを追加・更新した
-* [ ] スコープ外の変更を含んでいない
+- [ ] DOD.mdを満たしている
+- [ ] Acceptance Criteriaを満たしている
+- [ ] 関連ドキュメントを更新した、または更新不要である
+- [ ] 不要なconsole出力がない
+- [ ] テストを追加・更新した、または不要である
+- [ ] スコープ外の変更を含んでいない
+- [ ] Ready for Reviewへ変更していない
+- [ ] Mergeしていない
 
 ---
 
 # Risks / Notes
 
-懸念事項やレビュー時に見てほしいポイントを記載する。
-
-例
-
-* localStorage周辺の実装を重点的に確認してほしい
-* GoalSettingのoptionalityを見直した
+-

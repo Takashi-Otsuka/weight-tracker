@@ -27,11 +27,28 @@ docs/LOGGING_POLICY.md
 docs/DATE_POLICY.md
 docs/CI_CD_POLICY.md
 docs/STAGING_STRATEGY.md
+docs/CODEX_WORKFLOW.md
+docs/AUTOMATION_POLICY.md
+docs/adr/**
 ```
 
 ---
 
 # Working Principle
+
+## Issue Driven Development
+
+Issueが存在しない作業は禁止。
+
+Codexは必ずIssueを起点として作業すること。
+
+Issueに記載された以下を遵守すること。
+
+- Purpose
+- Acceptance Criteria
+- Out of Scope
+
+Acceptance Criteriaを満たしていない状態で完了扱いにしないこと。
 
 ## Scope Control
 
@@ -39,11 +56,11 @@ docs/STAGING_STRATEGY.md
 
 勝手に以下を行わないこと。
 
-* 仕様外の機能追加
-* Phase外の機能実装
-* 大規模リファクタリング
-* 依存ライブラリ追加
-* UIデザインの大幅変更
+- 仕様外の機能追加
+- Phase外の機能実装
+- 大規模リファクタリング
+- 依存ライブラリ追加
+- UIデザインの大幅変更
 
 不明点がある場合は、勝手に決めずTODOコメントを残すこと。
 
@@ -59,6 +76,7 @@ docs/STAGING_STRATEGY.md
 3. テスト方針
 4. 影響範囲
 5. リスク・懸念点
+6. ドキュメント更新要否
 ```
 
 ---
@@ -67,15 +85,15 @@ docs/STAGING_STRATEGY.md
 
 以下を守ること。
 
-* Next.js App Routerを利用する
-* TypeScriptを利用する
-* Tailwind CSSを利用する
-* UIとビジネスロジックを分離する
-* page.tsxにビジネスロジックを書かない
-* componentからlocalStorageへ直接アクセスしない
-* storage層を経由する
-* 再利用可能なロジックはfeatures配下へ配置する
-* 共通処理はlib配下へ配置する
+- Next.js App Routerを利用する
+- TypeScriptを利用する
+- Tailwind CSSを利用する
+- UIとビジネスロジックを分離する
+- page.tsxにビジネスロジックを書かない
+- componentからlocalStorageへ直接アクセスしない
+- storage層を経由する
+- 再利用可能なロジックはfeatures配下へ配置する
+- 共通処理はlib配下へ配置する
 
 ---
 
@@ -85,13 +103,13 @@ docs/STAGING_STRATEGY.md
 
 以下を守ること。
 
-* any禁止
-* interfaceは原則使用しない
-* typeを利用する
-* enumは原則使用しない
-* Union Typeを利用する
-* 未使用import禁止
-* 未使用変数禁止
+- any禁止
+- interfaceは原則使用しない
+- typeを利用する
+- enumは原則使用しない
+- Union Typeを利用する
+- 未使用import禁止
+- 未使用変数禁止
 
 ---
 
@@ -101,12 +119,12 @@ docs/STAGING_STRATEGY.md
 
 特に以下を守る。
 
-* React Component: PascalCase
-* Hook: use + PascalCase
-* Function: camelCase
-* Type: PascalCase
-* Constant: UPPER_SNAKE_CASE
-* Boolean: is / has / can / should を利用
+- React Component: PascalCase
+- Hook: use + PascalCase
+- Function: camelCase
+- Type: PascalCase
+- Constant: UPPER_SNAKE_CASE
+- Boolean: is / has / can / should を利用
 
 ---
 
@@ -114,10 +132,10 @@ docs/STAGING_STRATEGY.md
 
 `docs/DATE_POLICY.md` に従うこと。
 
-* 保存形式は `YYYY-MM-DD`
-* タイムゾーンは `Asia/Tokyo`
-* アプリ内で直接 `new Date()` を乱用しない
-* 日付処理は共通utilityを利用する
+- 保存形式は `YYYY-MM-DD`
+- タイムゾーンは `Asia/Tokyo`
+- アプリ内で直接 `new Date()` を乱用しない
+- 日付処理は共通utilityを利用する
 
 ---
 
@@ -127,11 +145,11 @@ docs/STAGING_STRATEGY.md
 
 以下を守る。
 
-* UIをクラッシュさせない
-* ユーザーに技術的エラーを表示しない
-* Validation ErrorとSystem Errorを区別する
-* localStorage破損を考慮する
-* Error Boundary導入を前提にする
+- UIをクラッシュさせない
+- ユーザーに技術的エラーを表示しない
+- Validation ErrorとSystem Errorを区別する
+- localStorage破損を考慮する
+- Error Boundary導入を前提にする
 
 ---
 
@@ -141,12 +159,12 @@ docs/STAGING_STRATEGY.md
 
 以下を守る。
 
-* UI層およびfeature層から直接consoleを呼ばない
-* ログは `lib/logger.ts` を経由する
-* 体重値をログに出さない
-* メモ内容をログに出さない
-* 個人情報をログに出さない
-* ログメッセージはsnake_caseにする
+- UI層およびfeature層から直接consoleを呼ばない
+- ログは `lib/logger.ts` を経由する
+- 体重値をログに出さない
+- メモ内容をログに出さない
+- 個人情報をログに出さない
+- ログメッセージはsnake_caseにする
 
 ---
 
@@ -190,7 +208,7 @@ SimulationResultCard
 
 Playwrightを利用する。
 
-ただしPhase1ではstaging整備後に導入する。
+ただしPhase1ではPlaywright導入後に、Vercel Preview Deploymentをstaging相当として実行する。
 
 ---
 
@@ -236,16 +254,15 @@ npm run test:e2e
 
 ## Branch
 
-以下を利用する。
+Issue番号をブランチ名に含めること。
 
-```text
-feature/*
-fix/*
-docs/*
-chore/*
-refactor/*
-test/*
-```
+形式
+
+feature/{issue-number}-{summary}
+fix/{issue-number}-{summary}
+docs/{issue-number}-{summary}
+chore/{issue-number}-{summary}
+test/{issue-number}-{summary}
 
 ## Commit
 
@@ -264,14 +281,34 @@ test: add simulation calculation tests
 
 # Pull Request Rules
 
-Pull Requestでは以下を満たすこと。
+CodexはDraft Pull Requestを作成すること。
 
-* 1 PR = 1目的
-* DODを満たす
-* スクリーンショットを添付する
-* テスト結果を記載する
-* 不要な変更を含めない
-* レビュー可能なサイズにする
+Ready for Reviewへ変更しないこと。
+
+Mergeしないこと。
+
+最終レビューおよびMerge判断は人間が行う。
+
+Pull Request本文には以下を含めること。
+
+## Related Issue
+
+Closes #<issue number>
+
+## Summary
+
+変更概要
+
+## Changes
+
+変更一覧
+
+## Test
+
+- npm run lint
+- npm run build
+- npm run test
+- npm run test:coverage
 
 ---
 
@@ -279,14 +316,35 @@ Pull Requestでは以下を満たすこと。
 
 以下の場合は関連ドキュメントを更新すること。
 
-* 仕様変更
-* 画面追加
-* データ構造変更
-* アーキテクチャ変更
-* 依存ライブラリ追加
-* テスト方針変更
-* エラーハンドリング変更
-* ログ出力方針変更
+- 仕様変更
+- 画面追加
+- データ構造変更
+- アーキテクチャ変更
+- 依存ライブラリ追加
+- テスト方針変更
+- エラーハンドリング変更
+- ログ出力方針変更
+
+仕様変更や型変更を行った場合は、
+実装コードとドキュメントの整合性を確認すること。
+
+対象
+
+- SPEC.md
+- ARCHITECTURE.md
+- ADR
+- 実装コード
+
+# GitHub Restrictions
+
+以下は禁止。
+
+- Issueなし実装
+- mainへの直接Commit
+- mainへの直接Push
+- Force Push
+- Ready for Review変更
+- Merge実行
 
 ---
 
@@ -294,16 +352,16 @@ Pull Requestでは以下を満たすこと。
 
 以下は禁止。
 
-* `any` の使用
-* `enum` の使用
-* `interface` の原則使用
-* component内のlocalStorage直接操作
-* page.tsxへのビジネスロジック記述
-* production向けの直接console出力
-* 体重値やメモ内容のログ出力
-* 仕様外機能の実装
-* 未確認の依存ライブラリ追加
-* DOD未達での完了扱い
+- `any` の使用
+- `enum` の使用
+- `interface` の原則使用
+- component内のlocalStorage直接操作
+- page.tsxへのビジネスロジック記述
+- production向けの直接console出力
+- 体重値やメモ内容のログ出力
+- 仕様外機能の実装
+- 未確認の依存ライブラリ追加
+- DOD未達での完了扱い
 
 ---
 
@@ -316,5 +374,6 @@ Pull Requestでは以下を満たすこと。
 2. 変更ファイル
 3. テスト結果
 4. DOD確認結果
-5. 残課題
+5. ドキュメント更新内容
+6. 残課題
 ```

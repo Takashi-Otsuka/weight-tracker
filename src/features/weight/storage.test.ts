@@ -162,14 +162,14 @@ describe("saveWeightRecord", () => {
     ]);
   });
 
-  it("logs and returns next records when saving fails", () => {
+  it("logs and throws when saving fails", () => {
     const setItem = vi
       .spyOn(Storage.prototype, "setItem")
       .mockImplementation(() => {
         throw new Error("quota exceeded");
       });
 
-    expect(saveWeightRecord(firstRecord)).toEqual([firstRecord]);
+    expect(() => saveWeightRecord(firstRecord)).toThrow("quota exceeded");
     expect(logger.error).toHaveBeenCalledWith(
       "failed_to_save_weight_records",
       expect.any(Error),

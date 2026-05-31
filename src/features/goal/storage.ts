@@ -53,6 +53,8 @@ export function saveGoalSetting(goalSetting: GoalSetting): GoalSetting | null {
     logger.error("failed_to_save_goal_setting", error, {
       storageKey: STORAGE_KEYS.GOAL_SETTING
     });
+
+    throw error;
   }
 
   return goalSetting;

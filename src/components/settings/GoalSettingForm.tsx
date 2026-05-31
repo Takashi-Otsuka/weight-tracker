@@ -10,21 +10,49 @@ export type GoalSettingFormValue = {
   targetDate: string;
 };
 
+export type GoalSettingFormInitialValue = Partial<GoalSettingFormValue>;
+
+export type GoalSettingFormSubmitResult =
+  | void
+  | {
+      isSuccess: true;
+    }
+  | {
+      isSuccess: false;
+      message: string;
+    };
+
 export type GoalSettingFormProps = {
-  onSubmit: (value: GoalSettingFormValue) => void;
+  initialValue?: GoalSettingFormInitialValue;
+  onSubmit: (
+    value: GoalSettingFormValue
+  ) => GoalSettingFormSubmitResult | Promise<GoalSettingFormSubmitResult>;
 };
 
-type GoalSettingField = "currentWeightKg" | "targetWeightKg" | "targetDate";
+type GoalSettingField =
+  | "currentWeightKg"
+  | "targetWeightKg"
+  | "targetDate"
+  | "form";
 type GoalSettingErrors = Partial<Record<GoalSettingField, string>>;
 
-export function GoalSettingForm({ onSubmit }: GoalSettingFormProps) {
-  const [currentWeightKg, setCurrentWeightKg] = useState("");
-  const [targetWeightKg, setTargetWeightKg] = useState("");
-  const [targetDate, setTargetDate] = useState("");
+export function GoalSettingForm({
+  initialValue,
+  onSubmit
+}: GoalSettingFormProps) {
+  const [currentWeightKg, setCurrentWeightKg] = useState(
+    initialValue?.currentWeightKg?.toString() ?? ""
+  );
+  const [targetWeightKg, setTargetWeightKg] = useState(
+    initialValue?.targetWeightKg?.toString() ?? ""
+  );
+  const [targetDate, setTargetDate] = useState(initialValue?.targetDate ?? "");
   const [errors, setErrors] = useState<GoalSettingErrors>({});
+  const [successMessage, setSuccessMessage] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSuccessMessage("");
 
     const nextErrors: GoalSettingErrors = {};
     const weightResult = validateTargetWeight({
@@ -54,10 +82,20 @@ export function GoalSettingForm({ onSubmit }: GoalSettingFormProps) {
       return;
     }
 
-    onSubmit({
+    const result = await onSubmit({
       ...weightResult.value,
       targetDate: targetDateResult.value
     });
+
+    if (result?.isSuccess === false) {
+      setErrors({
+        form: result.message
+      });
+      return;
+    }
+
+    setErrors({});
+    setSuccessMessage("保存しました");
   }
 
   return (
@@ -67,6 +105,17 @@ export function GoalSettingForm({ onSubmit }: GoalSettingFormProps) {
       noValidate
       onSubmit={handleSubmit}
     >
+      {errors.form ? (
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          {errors.form}
+        </p>
+      ) : null}
+      {successMessage ? (
+        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
+          {successMessage}
+        </p>
+      ) : null}
+
       <div className="flex flex-col gap-2">
         <label
           className="text-sm font-medium text-zinc-900"

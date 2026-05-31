@@ -38,6 +38,64 @@ describe("GoalSettingForm", () => {
     });
   });
 
+  it("shows initial values", () => {
+    render(
+      <GoalSettingForm
+        initialValue={{
+          currentWeightKg: 80.1,
+          targetWeightKg: 75,
+          targetDate: "2026-06-30"
+        }}
+        onSubmit={vi.fn()}
+      />
+    );
+
+    expect(screen.getByLabelText("現在体重")).toHaveValue(80.1);
+    expect(screen.getByLabelText("目標体重")).toHaveValue(75);
+    expect(screen.getByLabelText("目標日")).toHaveValue("2026-06-30");
+  });
+
+  it("shows a success message when submit succeeds", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <GoalSettingForm
+        onSubmit={() => ({
+          isSuccess: true
+        })}
+      />
+    );
+
+    await user.type(screen.getByLabelText("現在体重"), "80.1");
+    await user.type(screen.getByLabelText("目標体重"), "75.0");
+    await user.type(screen.getByLabelText("目標日"), "2026-06-30");
+    await user.click(screen.getByRole("button", { name: "目標を設定する" }));
+
+    expect(screen.getByText("保存しました")).toBeInTheDocument();
+  });
+
+  it("shows a form error when submit fails", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <GoalSettingForm
+        onSubmit={() => ({
+          isSuccess: false,
+          message: "目標設定の保存に失敗しました"
+        })}
+      />
+    );
+
+    await user.type(screen.getByLabelText("現在体重"), "80.1");
+    await user.type(screen.getByLabelText("目標体重"), "75.0");
+    await user.type(screen.getByLabelText("目標日"), "2026-06-30");
+    await user.click(screen.getByRole("button", { name: "目標を設定する" }));
+
+    expect(
+      screen.getByText("目標設定の保存に失敗しました")
+    ).toBeInTheDocument();
+  });
+
   it("shows required validation errors", async () => {
     const user = userEvent.setup();
     const handleSubmit = vi.fn();

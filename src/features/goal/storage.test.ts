@@ -147,14 +147,14 @@ describe("saveGoalSetting", () => {
     });
   });
 
-  it("logs and returns goal setting when saving fails", () => {
+  it("logs and throws when saving fails", () => {
     const setItem = vi
       .spyOn(Storage.prototype, "setItem")
       .mockImplementation(() => {
         throw new Error("quota exceeded");
       });
 
-    expect(saveGoalSetting(goalSetting)).toEqual(goalSetting);
+    expect(() => saveGoalSetting(goalSetting)).toThrow("quota exceeded");
     expect(logger.error).toHaveBeenCalledWith(
       "failed_to_save_goal_setting",
       expect.any(Error),

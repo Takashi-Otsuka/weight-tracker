@@ -1,4 +1,4 @@
-import { WeightRecordRegistrationForm } from "@/components/weight/WeightRecordRegistrationForm";
+import { WeightRecordsSection } from "@/components/weight/WeightRecordsSection";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
             今日の体重を入力して、日々の変化を残します。
           </p>
         </section>
-        <WeightRecordRegistrationForm />
+        <WeightRecordsSection />
       </main>
     </div>
   );

@@ -25,8 +25,9 @@ beforeEach(() => {
 describe("WeightRecordRegistrationForm", () => {
   it("saves a weight record on submit", async () => {
     const user = userEvent.setup();
+    const handleSaveSuccess = vi.fn();
 
-    render(<WeightRecordRegistrationForm />);
+    render(<WeightRecordRegistrationForm onSaveSuccess={handleSaveSuccess} />);
 
     await user.clear(screen.getByLabelText("日付"));
     await user.type(screen.getByLabelText("日付"), "2026-05-30");
@@ -52,6 +53,7 @@ describe("WeightRecordRegistrationForm", () => {
     expect(records[0].id).toEqual(expect.any(String));
     expect(records[0].createdAt).toEqual(expect.any(String));
     expect(records[0].updatedAt).toEqual(expect.any(String));
+    expect(handleSaveSuccess).toHaveBeenCalledTimes(1);
   });
 
   it("shows a storage error when saving fails", async () => {

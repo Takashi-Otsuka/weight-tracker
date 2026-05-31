@@ -17,6 +17,10 @@ export function getToday(now: Date = new Date()): string {
   return `${year}-${month}-${day}`;
 }
 
+export function getCurrentIsoTimestamp(now: Date = new Date()): string {
+  return now.toISOString();
+}
+
 function getDatePart(
   parts: Intl.DateTimeFormatPart[],
   type: Intl.DateTimeFormatPartTypes

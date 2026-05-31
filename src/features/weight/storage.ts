@@ -75,6 +75,8 @@ function saveWeightRecords(records: WeightRecord[]): WeightRecord[] {
     logger.error("failed_to_save_weight_records", error, {
       storageKey: STORAGE_KEYS.WEIGHT_RECORDS
     });
+
+    throw error;
   }
 
   return sortedRecords;

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   formatDate,
+  getCurrentIsoTimestamp,
   getToday,
   isSameDate,
   isValidDateString,
@@ -13,6 +14,14 @@ describe("getToday", () => {
     const utcTimeBeforeJapanMidnight = new Date("2026-05-29T15:00:00.000Z");
 
     expect(getToday(utcTimeBeforeJapanMidnight)).toBe("2026-05-30");
+  });
+});
+
+describe("getCurrentIsoTimestamp", () => {
+  it("returns the current timestamp in ISO format", () => {
+    const now = new Date("2026-05-30T12:34:56.789Z");
+
+    expect(getCurrentIsoTimestamp(now)).toBe("2026-05-30T12:34:56.789Z");
   });
 });
 

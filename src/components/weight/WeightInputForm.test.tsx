@@ -28,7 +28,7 @@ describe("WeightInputForm", () => {
 
   it("submits validated values", async () => {
     const user = userEvent.setup();
-    const handleSubmit = vi.fn();
+    const handleSubmit = vi.fn(() => ({ isSuccess: true as const }));
 
     render(
       <WeightInputForm initialDate="2026-05-30" onSubmit={handleSubmit} />
@@ -44,6 +44,9 @@ describe("WeightInputForm", () => {
       weightKg: 80.1,
       memo: "朝食前"
     });
+    expect(screen.getByText("保存しました")).toBeInTheDocument();
+    expect(screen.getByLabelText("体重")).toHaveValue(null);
+    expect(screen.getByLabelText("メモ")).toHaveValue("");
   });
 
   it("submits without memo when memo is empty", async () => {
@@ -110,5 +113,24 @@ describe("WeightInputForm", () => {
       screen.getByText("メモは500文字以内で入力してください")
     ).toBeInTheDocument();
     expect(handleSubmit).not.toHaveBeenCalled();
+  });
+
+  it("shows a submit error", async () => {
+    const user = userEvent.setup();
+    const handleSubmit = vi.fn(() => ({
+      isSuccess: false as const,
+      message: "体重記録の保存に失敗しました"
+    }));
+
+    render(
+      <WeightInputForm initialDate="2026-05-30" onSubmit={handleSubmit} />
+    );
+
+    await user.type(screen.getByLabelText("体重"), "80.1");
+    await user.click(screen.getByRole("button", { name: "記録する" }));
+
+    expect(
+      screen.getByText("体重記録の保存に失敗しました")
+    ).toBeInTheDocument();
   });
 });

@@ -12,12 +12,24 @@ export type WeightInputFormValue = {
   memo?: string;
 };
 
+export type WeightInputFormSubmitResult =
+  | void
+  | {
+      isSuccess: true;
+    }
+  | {
+      isSuccess: false;
+      message: string;
+    };
+
 export type WeightInputFormProps = {
   initialDate?: string;
-  onSubmit: (value: WeightInputFormValue) => void;
+  onSubmit: (
+    value: WeightInputFormValue
+  ) => WeightInputFormSubmitResult | Promise<WeightInputFormSubmitResult>;
 };
 
-type WeightInputField = "date" | "weightKg" | "memo";
+type WeightInputField = "date" | "weightKg" | "memo" | "form";
 type WeightInputErrors = Partial<Record<WeightInputField, string>>;
 
 export function WeightInputForm({
@@ -28,9 +40,11 @@ export function WeightInputForm({
   const [weightKg, setWeightKg] = useState("");
   const [memo, setMemo] = useState("");
   const [errors, setErrors] = useState<WeightInputErrors>({});
+  const [successMessage, setSuccessMessage] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSuccessMessage("");
 
     const nextErrors: WeightInputErrors = {};
     const dateResult = validateDate(date);
@@ -55,11 +69,23 @@ export function WeightInputForm({
       return;
     }
 
-    onSubmit({
+    const result = await onSubmit({
       date: dateResult.value,
       weightKg: weightResult.value,
       memo: normalizedMemo === "" ? undefined : normalizedMemo
     });
+
+    if (result?.isSuccess === false) {
+      setErrors({
+        form: result.message
+      });
+      return;
+    }
+
+    setWeightKg("");
+    setMemo("");
+    setErrors({});
+    setSuccessMessage("保存しました");
   }
 
   return (
@@ -68,6 +94,17 @@ export function WeightInputForm({
       className="flex w-full flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-4 shadow-sm"
       onSubmit={handleSubmit}
     >
+      {errors.form ? (
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          {errors.form}
+        </p>
+      ) : null}
+      {successMessage ? (
+        <p className="rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
+          {successMessage}
+        </p>
+      ) : null}
+
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-zinc-900" htmlFor="date">
           日付

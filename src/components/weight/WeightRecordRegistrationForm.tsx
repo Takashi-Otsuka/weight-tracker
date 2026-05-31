@@ -8,7 +8,13 @@ import {
 
 import { registerWeightRecord } from "@/features/weight/registration";
 
-export function WeightRecordRegistrationForm() {
+export type WeightRecordRegistrationFormProps = {
+  onSaveSuccess?: () => void;
+};
+
+export function WeightRecordRegistrationForm({
+  onSaveSuccess
+}: WeightRecordRegistrationFormProps) {
   function handleSubmit(
     value: WeightInputFormValue
   ): WeightInputFormSubmitResult {
@@ -20,6 +26,8 @@ export function WeightRecordRegistrationForm() {
         message: result.message
       };
     }
+
+    onSaveSuccess?.();
 
     return {
       isSuccess: true
